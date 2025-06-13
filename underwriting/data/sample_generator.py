@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from underwriting_models.models import (
+from models import (
     Applicant, Driver, Vehicle, Violation, Claim,
     LicenseStatus, ViolationType, ClaimType, VehicleCategory
 )
