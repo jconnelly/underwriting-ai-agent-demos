@@ -9,7 +9,7 @@ from langchain.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.schema import HumanMessage
 
-from models import Applicant, Driver, Vehicle, Violation, Claim, UnderwritingResult, UnderwritingDecision
+from .models import Applicant, Driver, Vehicle, Violation, Claim, UnderwritingResult, UnderwritingDecision
 
 class UnderwritingEngine:
     """Enhanced underwriting engine with A/B testing support."""

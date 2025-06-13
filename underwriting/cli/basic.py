@@ -9,9 +9,9 @@ import sys
 from datetime import datetime
 from typing import List, Dict, Any
 
-from underwriting_engine import UnderwritingEngine
-from sample_applicants import create_sample_applicants, print_applicant_summary
-from models import Applicant, UnderwritingResult, UnderwritingDecision
+from underwriting.core.engine import UnderwritingEngine
+from underwriting.data.sample_generator import create_sample_applicants, print_applicant_summary
+from underwriting.core.models import Applicant, UnderwritingResult, UnderwritingDecision
 
 class UnderwritingTestFramework:
     """Framework for testing underwriting decisions."""

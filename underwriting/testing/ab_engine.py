@@ -5,8 +5,8 @@ import json
 import time
 from enum import Enum
 
-from underwriting_engine import UnderwritingEngine
-from models import Applicant, UnderwritingResult, UnderwritingDecision
+from underwriting.core.engine import UnderwritingEngine
+from underwriting.core.models import Applicant, UnderwritingResult, UnderwritingDecision
 
 class TestVariant(str, Enum):
     """Test variant identifiers."""

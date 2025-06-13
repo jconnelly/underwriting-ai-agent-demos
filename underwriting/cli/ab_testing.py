@@ -11,11 +11,11 @@ import json
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 
-from ab_testing_engine import ABTestEngine, TestConfiguration
-from statistical_analysis import StatisticalAnalyzer, BusinessImpactCalculator
-from prompt_templates import PromptTemplateFactory, PromptTestConfiguration, PromptVariant
-from sample_applicants import create_sample_applicants
-from models import Applicant
+from underwriting.testing.ab_engine import ABTestEngine, TestConfiguration
+from underwriting.testing.statistical_analysis import StatisticalAnalyzer, BusinessImpactCalculator
+from underwriting.ai.prompts import PromptTemplateFactory, PromptTestConfiguration, PromptVariant
+from underwriting.data.sample_generator import create_sample_applicants
+from underwriting.core.models import Applicant
 
 class ABTestRunner:
     """Main A/B testing framework runner."""

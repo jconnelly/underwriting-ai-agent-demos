@@ -3,7 +3,7 @@ from typing import List, Dict, Any, Tuple, Optional
 from dataclasses import dataclass
 from scipy import stats
 import numpy as np
-from ab_testing_engine import ComparisonMetrics, TestResult
+from .ab_engine import ComparisonMetrics, TestResult
 
 @dataclass
 class StatisticalTest:
