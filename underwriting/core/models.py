@@ -76,6 +76,7 @@ class Driver(BaseModel):
     license_status: LicenseStatus
     license_issue_date: date
     license_expiration_date: date
+    years_licensed: int
     violations: List[Violation] = Field(default_factory=list)
     claims: List[Claim] = Field(default_factory=list)
     

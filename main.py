@@ -21,6 +21,7 @@ Examples:
     python main.py ab-test --comprehensive
 """
 
+import os
 import sys
 import argparse
 from pathlib import Path
@@ -29,9 +30,13 @@ from pathlib import Path
 project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
+# Set PYTHONPATH environment variable as well
+os.environ['PYTHONPATH'] = str(project_root)
+
 try:
     from underwriting.cli.basic import main as basic_main
     from underwriting.cli.ab_testing import main as ab_test_main
+    from underwriting.cli.web_server import main as web_server_main
     from underwriting import __version__
 except ImportError as e:
     print(f"Error importing underwriting modules: {e}")
@@ -47,12 +52,12 @@ def create_parser():
         description="Automobile Insurance Underwriting System with AI and A/B Testing",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Examples:
-  %(prog)s basic --test                    Run basic underwriting tests
-  %(prog)s basic --interactive             Interactive underwriting mode
-  %(prog)s ab-test --list-configs          List available A/B test configurations
-  %(prog)s ab-test --comprehensive         Run comprehensive A/B test suite
-  %(prog)s ab-test --rule-comparison standard liberal
+            Examples:
+            %(prog)s basic --test                    Run basic underwriting tests
+            %(prog)s basic --interactive             Interactive underwriting mode
+            %(prog)s ab-test --list-configs          List available A/B test configurations
+            %(prog)s ab-test --comprehensive         Run comprehensive A/B test suite
+            %(prog)s ab-test --rule-comparison standard liberal
         """
     )
     
@@ -160,6 +165,39 @@ Examples:
         help="Export results to JSON file"
     )
     
+    # Web server subcommand
+    web_parser = subparsers.add_parser(
+        "web",
+        help="Web server operations",
+        description="Start the web interface for the underwriting system"
+    )
+    
+    web_parser.add_argument(
+        "--host",
+        type=str,
+        default="127.0.0.1",
+        help="Host to bind to (default: 127.0.0.1)"
+    )
+    
+    web_parser.add_argument(
+        "--port",
+        type=int,
+        default=5000,
+        help="Port to bind to (default: 5000)"
+    )
+    
+    web_parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Enable debug mode"
+    )
+    
+    web_parser.add_argument(
+        "--reload",
+        action="store_true",
+        help="Enable auto-reload on file changes"
+    )
+    
     return parser
 
 
@@ -228,6 +266,31 @@ def main():
             
             try:
                 return ab_test_main()
+            finally:
+                sys.argv = original_argv
+        
+        elif args.command == "web":
+            # Convert args to format expected by web server CLI
+            web_args = []
+            
+            if args.host != "127.0.0.1":
+                web_args.extend(["--host", args.host])
+            
+            if args.port != 5000:
+                web_args.extend(["--port", str(args.port)])
+            
+            if args.debug:
+                web_args.append("--debug")
+            
+            if args.reload:
+                web_args.append("--reload")
+            
+            # Override sys.argv for the web server CLI
+            original_argv = sys.argv
+            sys.argv = ["web_server"] + web_args
+            
+            try:
+                return web_server_main()
             finally:
                 sys.argv = original_argv
         
