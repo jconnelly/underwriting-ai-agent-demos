@@ -23,7 +23,6 @@ def create_sample_applicants():
             license_status=LicenseStatus.VALID,
             license_issue_date=date(2003, 3, 15),
             license_expiration_date=date(2027, 3, 15),
-            years_licensed=15,
             violations=[],  # Clean record
             claims=[]  # No claims
         ),
@@ -57,7 +56,6 @@ def create_sample_applicants():
             license_status=LicenseStatus.VALID,
             license_issue_date=date(1996, 8, 22),
             license_expiration_date=date(2026, 8, 22),
-            years_licensed=27,
             violations=[
                 Violation(
                     violation_type=ViolationType.SPEEDING_10_UNDER,
@@ -103,7 +101,6 @@ def create_sample_applicants():
             license_state="FL",
             license_status=LicenseStatus.VALID,
             license_issue_date=date(2008, 12, 3),
-            years_licensed=15,
             license_expiration_date=date(2025, 12, 3),
             violations=[
                 Violation(
@@ -158,7 +155,6 @@ def create_sample_applicants():
             license_status=LicenseStatus.VALID,
             license_issue_date=date(2013, 5, 8),
             license_expiration_date=date(2025, 5, 8),
-            years_licensed=10,
             violations=[
                 Violation(
                     violation_type=ViolationType.SPEEDING_15_OVER,
@@ -217,7 +213,6 @@ def create_sample_applicants():
             license_status=LicenseStatus.VALID,
             license_issue_date=date(2021, 9, 12),
             license_expiration_date=date(2029, 9, 12),
-            years_licensed=2,
             violations=[
                 Violation(
                     violation_type=ViolationType.SPEEDING_15_OVER,
@@ -262,7 +257,6 @@ def create_sample_applicants():
             license_status=LicenseStatus.VALID,
             license_issue_date=date(2006, 11, 30),
             license_expiration_date=date(2026, 11, 30),
-            years_licensed=15,
             violations=[
                 Violation(
                     violation_type=ViolationType.RECKLESS_DRIVING,

@@ -37,6 +37,7 @@ try:
     from underwriting.cli.basic import main as basic_main
     from underwriting.cli.ab_testing import main as ab_test_main
     from underwriting.cli.web_server import main as web_server_main
+    from underwriting.cli.streamlit_server import main as streamlit_main
     from underwriting import __version__
 except ImportError as e:
     print(f"Error importing underwriting modules: {e}")
@@ -52,12 +53,12 @@ def create_parser():
         description="Automobile Insurance Underwriting System with AI and A/B Testing",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-            Examples:
-            %(prog)s basic --test                    Run basic underwriting tests
-            %(prog)s basic --interactive             Interactive underwriting mode
-            %(prog)s ab-test --list-configs          List available A/B test configurations
-            %(prog)s ab-test --comprehensive         Run comprehensive A/B test suite
-            %(prog)s ab-test --rule-comparison standard liberal
+Examples:
+  %(prog)s basic --test                    Run basic underwriting tests
+  %(prog)s basic --interactive             Interactive underwriting mode
+  %(prog)s ab-test --list-configs          List available A/B test configurations
+  %(prog)s ab-test --comprehensive         Run comprehensive A/B test suite
+  %(prog)s ab-test --rule-comparison standard liberal
         """
     )
     
@@ -198,6 +199,39 @@ def create_parser():
         help="Enable auto-reload on file changes"
     )
     
+    # Streamlit server subcommand
+    streamlit_parser = subparsers.add_parser(
+        "streamlit",
+        help="Streamlit web application",
+        description="Start the Streamlit web interface for the underwriting system"
+    )
+    
+    streamlit_parser.add_argument(
+        "--host",
+        type=str,
+        default="localhost",
+        help="Host to bind to (default: localhost)"
+    )
+    
+    streamlit_parser.add_argument(
+        "--port",
+        type=int,
+        default=8501,
+        help="Port to bind to (default: 8501)"
+    )
+    
+    streamlit_parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Enable debug mode with auto-reload"
+    )
+    
+    streamlit_parser.add_argument(
+        "--no-browser",
+        action="store_true",
+        help="Do not automatically open browser"
+    )
+    
     return parser
 
 
@@ -293,6 +327,10 @@ def main():
                 return web_server_main()
             finally:
                 sys.argv = original_argv
+        
+        elif args.command == "streamlit":
+            # Convert args to format expected by Streamlit CLI
+            return streamlit_main(args)
         
         else:
             parser.print_help()

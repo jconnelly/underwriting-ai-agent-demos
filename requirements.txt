@@ -12,3 +12,5 @@ flask>=2.3.0
 flask-wtf>=1.1.0
 wtforms>=3.0.0
 
+streamlit>=1.28.0
+plotly>=5.15.0

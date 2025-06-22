@@ -31,10 +31,7 @@ class UnderwritingEngine:
     
     def _load_rules(self) -> Dict[str, Any]:
         """Load underwriting rules from JSON file."""
-        script_directory = os.path.dirname(os.path.abspath(__file__))
-        rules_path = os.path.abspath(os.path.join(script_directory, "..", "..", "config", "rules", self.rules_file))
-        self.rules_file = rules_path
-
+        
         try:
             with open(self.rules_file, 'r') as f:
                 data = json.load(f)
@@ -99,32 +96,32 @@ PRIMARY DRIVER:
         if driver.violations:
             violations_info = "\nVIOLATIONS:"
             for violation in driver.violations:
-                years_ago = (datetime.now().date() - violation.violation_date).days // 365
+                years_ago = (datetime.now().date() - violation.date).days // 365
                 violations_info += f"\n- {violation.violation_type} ({years_ago} years ago)"
         else:
             violations_info = "\nVIOLATIONS: None"
         
         # Claims
         claims_info = ""
-        if driver.claims:
+        if driver.claims_history:
             claims_info = "\nCLAIMS HISTORY:"
-            for claim in driver.claims:
-                years_ago = (datetime.now().date() - claim.claim_date).days // 365
-                claims_info += f"\n- {claim.claim_type}: ${claim.claim_amount:,} ({years_ago} years ago)"
+            for claim in driver.claims_history:
+                years_ago = (datetime.now().date() - claim.date).days // 365
+                claims_info += f"\n- {claim.claim_type}: ${claim.amount:,} ({years_ago} years ago)"
         else:
             claims_info = "\nCLAIMS HISTORY: None"
         
         # Vehicles
         vehicles_info = "\nVEHICLES:"
         for vehicle in applicant.vehicles:
-            vehicles_info += f"\n- {vehicle.year} {vehicle.make} {vehicle.model} ({vehicle.category})"
+            vehicles_info += f"\n- {vehicle.year} {vehicle.make} {vehicle.model} ({vehicle.vehicle_type})"
         
         # Other info
         other_info = f"""
 CREDIT SCORE: {applicant.credit_score}
-COVERAGE LAPSE: {applicant.prior_insurance_lapse_days} days"""
-#TERRITORY: {applicant.territory}
-#REQUESTED COVERAGE: {applicant.requested_coverage}"""
+COVERAGE LAPSE: {applicant.coverage_lapse_days} days
+TERRITORY: {applicant.territory}
+REQUESTED COVERAGE: {applicant.requested_coverage}"""
         
         return driver_info + violations_info + claims_info + vehicles_info + other_info
     

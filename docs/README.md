@@ -13,38 +13,15 @@ A Python/LangChain application that evaluates automobile insurance applicants us
 ## Project Structure
 
 ```
-underwriting-ai-agent-demo/
-├── main.py                          # 🎯 Main entry point
-├── pyproject.toml                   # Modern Python config
-├── requirements.txt                 # Dependencies
-│
-├── underwriting/                    # 📦 Main package
-│   ├── core/                        # Business logic
-│   │   ├── models.py               # Pydantic data models
-│   │   ├── engine.py               # LLM underwriting engine
-│   │   └── exceptions.py           # Custom exceptions
-│   ├── ai/                         # AI components
-│   │   └── prompts.py              # LangChain prompt templates
-│   ├── testing/                    # A/B testing framework
-│   │   ├── ab_engine.py            # Comparison engine
-│   │   └── statistical_analysis.py # Statistical testing
-│   ├── web/                        # 🌐 Flask web interface
-│   │   ├── app.py                  # Flask application
-│   │   ├── routes.py               # Web routes
-│   │   ├── forms.py                # Web forms
-│   │   ├── templates/              # HTML templates
-│   │   └── static/                 # CSS, JS, assets
-│   ├── cli/                        # Command-line interfaces
-│   ├── data/                       # Sample data and generators
-│   └── utils/                      # Utilities and helpers
-│
-├── config/rules/                   # 📋 Underwriting rules
-│   ├── underwriting_rules.json    # Standard rules
-│   ├── underwriting_rules_conservative.json
-│   └── underwriting_rules_liberal.json
-│
-├── tests/                          # 🧪 Test suite
-└── docs/                           # 📚 Documentation
+underwriting_system/
+├── main.py                    # Main application and test framework
+├── underwriting_engine.py     # Core LangChain/OpenAI integration
+├── models.py                  # Pydantic data models
+├── sample_applicants.py       # Test data generation
+├── underwriting_rules.json    # Structured underwriting rules
+├── requirements.txt           # Python dependencies
+├── .env.example              # Environment variables template
+└── README.md                 # This file
 ```
 
 ## Setup

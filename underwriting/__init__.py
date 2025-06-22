@@ -19,8 +19,8 @@ Example usage:
 """
 
 __version__ = "1.0.0"
-__author__ = "Manus AI"
-__email__ = "support@manus.ai"
+__author__ = "Jeremiah Connelly"
+__email__ = "contact@jeremiahconnelly.dev"
 
 # Package-level imports for convenience
 from underwriting.core.models import (

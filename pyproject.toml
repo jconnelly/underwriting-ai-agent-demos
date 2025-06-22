@@ -9,7 +9,7 @@ description = "AI-powered automobile insurance underwriting with A/B testing fra
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Manus AI", email = "support@manus.ai"}
+    {name = "Jeremiah Connelly", email = "contact@jeremiahconnelly.dev"}
 ]
 keywords = ["insurance", "underwriting", "ai", "llm", "ab-testing"]
 classifiers = [
@@ -51,10 +51,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/manus-ai/automobile-underwriting-system"
+Homepage = "https://github.com/jconnelly/automobile-underwriting-system"
 Documentation = "https://automobile-underwriting-system.readthedocs.io/"
-Repository = "https://github.com/manus-ai/automobile-underwriting-system.git"
-Issues = "https://github.com/manus-ai/automobile-underwriting-system/issues"
+Repository = "https://github.com/jconnelly/automobile-underwriting-system.git"
+Issues = "https://github.com/jconnelly/automobile-underwriting-system/issues"
 
 [project.scripts]
 underwriting = "underwriting.cli.main:main"

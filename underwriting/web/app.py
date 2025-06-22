@@ -6,15 +6,21 @@ import os
 from flask import Flask
 from pathlib import Path
 
+# Load environment variables
+from ..utils.env_loader import load_environment_variables, get_flask_secret_key, is_debug_mode
+
 def create_app(config=None):
     """Create and configure the Flask application."""
+    
+    # Load environment variables from .env file if available
+    load_environment_variables()
     
     app = Flask(__name__)
     
     # Configuration
     app.config.update({
-        'SECRET_KEY': os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production'),
-        'DEBUG': os.environ.get('FLASK_DEBUG', 'False').lower() == 'true',
+        'SECRET_KEY': get_flask_secret_key(),
+        'DEBUG': is_debug_mode(),
         'TESTING': False,
         'WTF_CSRF_ENABLED': True,
         'WTF_CSRF_TIME_LIMIT': None,
