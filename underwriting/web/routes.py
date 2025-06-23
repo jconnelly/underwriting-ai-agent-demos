@@ -245,10 +245,10 @@ def api_sample_applicants():
                     'years_licensed': applicant.primary_driver.years_licensed
                 },
                 'credit_score': applicant.credit_score,
-                'coverage_lapse_days': applicant.coverage_lapse_days,
+                'prior_insurance_lapse_days': applicant.prior_insurance_lapse_days,
                 'territory': applicant.territory,
                 'violations_count': len(applicant.primary_driver.violations),
-                'claims_count': len(applicant.primary_driver.claims_history),
+                'claims_count': len(applicant.primary_driver.claims),
                 'vehicles_count': len(applicant.vehicles)
             })
         
@@ -272,7 +272,7 @@ def create_applicant_from_form(form):
         license_state=form.driver.license_state.data.upper(),
         years_licensed=form.driver.years_licensed.data,
         violations=[],  # Would be populated from dynamic form fields
-        claims_history=[]  # Would be populated from dynamic form fields
+        claims=[]  # Would be populated from dynamic form fields
     )
     
     # Create basic vehicle (would be expanded for multiple vehicles)
@@ -292,9 +292,9 @@ def create_applicant_from_form(form):
         primary_driver=driver,
         vehicles=vehicles,
         credit_score=form.credit_score.data,
-        coverage_lapse_days=form.coverage_lapse_days.data,
+        prior_insurance_lapse_days=form.coverage_lapse_days.data,
         territory=form.territory.data,
-        requested_coverage=form.requested_coverage.data
+        coverage_requested=form.requested_coverage.data
     )
     
     return applicant

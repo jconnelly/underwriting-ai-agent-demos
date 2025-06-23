@@ -33,12 +33,15 @@ def create_sample_applicants():
                 make="Honda",
                 model="Accord",
                 category=VehicleCategory.SEDAN,
-                value=25000.0
+                value=25000.0,
+                vehicle_type=VehicleCategory.SEDAN
             )
         ],
         credit_score=750,
         prior_insurance_lapse_days=0,
-        fraud_history=False
+        fraud_history=False,
+        territory="Urban",
+        coverage_requested=["Liability", "Collision", "Comprehensive"]
     )
     applicants.append(applicant1)
     
@@ -79,12 +82,15 @@ def create_sample_applicants():
                 make="Hyundai",
                 model="Elantra",
                 category=VehicleCategory.SEDAN,
-                value=18000.0
+                value=18000.0,
+                vehicle_type=VehicleCategory.SEDAN
             )
         ],
         credit_score=680,
         prior_insurance_lapse_days=15,  # Short lapse, acceptable
-        fraud_history=False
+        fraud_history=False,
+        territory="Urban",
+        coverage_requested=["Liability", "Collision", "Comprehensive"]
     )
     applicants.append(applicant2)
     
@@ -132,12 +138,15 @@ def create_sample_applicants():
                 make="Chevrolet",
                 model="Malibu",
                 category=VehicleCategory.SEDAN,
-                value=16000.0
+                value=16000.0,
+                vehicle_type=VehicleCategory.SEDAN
             )
         ],
         credit_score=520,
         prior_insurance_lapse_days=45,
-        fraud_history=False
+        fraud_history=False,
+        territory="Urban",
+        coverage_requested=["Liability", "Collision", "Comprehensive"]
     )
     applicants.append(applicant3)
     
@@ -190,12 +199,15 @@ def create_sample_applicants():
                 make="BMW",
                 model="328i",
                 category=VehicleCategory.LUXURY_SEDAN,
-                value=22000.0
+                value=22000.0,
+                vehicle_type=VehicleCategory.SEDAN
             )
         ],
         credit_score=580,
         prior_insurance_lapse_days=120,  # Extended lapse - hard stop
-        fraud_history=False
+        fraud_history=False,
+        territory="Urban",
+        coverage_requested=["Liability", "Collision", "Comprehensive"]
     )
     applicants.append(applicant4)
     
@@ -234,12 +246,15 @@ def create_sample_applicants():
                 make="Acura",
                 model="TLX",
                 category=VehicleCategory.SPORTS_CAR,
-                value=19000.0
+                value=19000.0,
+                vehicle_type=VehicleCategory.SPORTS_CAR
             )
         ],
         credit_score=620,
         prior_insurance_lapse_days=0,
-        fraud_history=False
+        fraud_history=False,
+        territory="Urban",
+        coverage_requested=["Liability", "Collision", "Comprehensive"]
     )
     applicants.append(applicant5)
     
@@ -281,12 +296,15 @@ def create_sample_applicants():
                 make="Ford",
                 model="F-150",
                 category=VehicleCategory.PICKUP,
-                value=35000.0
+                value=35000.0,
+                vehicle_type=VehicleCategory.PICKUP
             )
         ],
         credit_score=710,
         prior_insurance_lapse_days=0,
-        fraud_history=False
+        fraud_history=False,
+        territory="Urban",
+        coverage_requested=["Liability", "Collision", "Comprehensive"]
     )
     applicants.append(applicant6)
     

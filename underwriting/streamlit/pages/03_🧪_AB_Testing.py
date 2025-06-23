@@ -18,9 +18,9 @@ import json
 project_root = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from underwriting.testing.ab_engine import ABTestingEngine, TestConfiguration
+from underwriting.testing.ab_engine import ABTestEngine, TestConfiguration
 from underwriting.testing.statistical_analysis import StatisticalAnalyzer
-from underwriting.data.sample_generator import get_sample_applicants
+from underwriting.data.sample_generator import create_sample_applicants 
 from underwriting.utils.env_loader import load_environment_variables
 
 def configure_page():
@@ -245,24 +245,27 @@ def run_ab_test_analysis():
     try:
         with st.spinner("🧪 Running A/B test analysis..."):
             # Initialize A/B testing engine
-            ab_engine = ABTestingEngine()
+            ab_engine = ABTestEngine()
             
             # Get sample applicants
-            sample_applicants = get_sample_applicants()
+            sample_applicants = create_sample_applicants()
             
+            print(f"Variant A: {config['variant_a']}")
+            print(f"Variant B: {config['variant_b']}")
+
             # Run comparison
             if config['test_type'] == "Rule Comparison":
-                results = ab_engine.compare_rule_configurations(
+                results = ab_engine.run_batch_comparison(
+                    sample_applicants,
                     config['variant_a'], 
-                    config['variant_b'], 
-                    sample_applicants
+                    config['variant_b']
                 )
             else:
                 # For demo, use rule comparison
-                results = ab_engine.compare_rule_configurations(
+                results = ab_engine.run_batch_comparison(
+                    sample_applicants,
                     config['variant_a'], 
-                    config['variant_b'], 
-                    sample_applicants
+                    config['variant_b']
                 )
             
             display_ab_results(results, config)

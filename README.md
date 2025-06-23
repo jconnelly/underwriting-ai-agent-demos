@@ -9,6 +9,25 @@ A comprehensive automobile insurance underwriting system featuring:
 - **Professional CLI Tools** for automation and testing
 - **Comprehensive Rule Engine** with configurable policies
 
+## ISSUES NEEDING RESOLUTION/FIXING
+
+### Look and Feel
+Every main section title image/bar should have the following after the description:
+   For example, on the Configuration page it should be:
+   "System Configuration"
+   "Manage Settings, API Keys, System Health"
+   "<p>This is a Portfolio Project created and managed by <href="https://jeremiahconnelly.dev">Jeremiah Connelly</href></p>"
+   or like on the Evaluate page
+   "Applicant Evaluation"
+   "AI-Powered Insurance Underwriting Assessment"
+   "<p>This is a Portfolio Project created and managed by <href="https://jeremiahconnelly.dev">Jeremiah Connelly</href></p>"
+
+### Functionality
+1. Evaluate.py
+   Line 146:  If the user selects from line 128, then it should populate all the fields in Evaluate.py with the user selected data
+
+
+
 ## 🚀 **Quick Start**
 
 ### **Web Interface (Recommended)**
@@ -17,7 +36,6 @@ A comprehensive automobile insurance underwriting system featuring:
 pip install -r requirements.txt
 
 # Set your OpenAI API key
-cp .env.example .env
 # Edit .env and add your OPENAI_API_KEY
 
 # Start web server

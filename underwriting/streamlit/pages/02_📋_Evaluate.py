@@ -11,6 +11,7 @@ from pathlib import Path
 from datetime import date, datetime, timedelta
 from typing import Optional
 import json
+import random
 
 # Add project root to path
 project_root = Path(__file__).parent.parent.parent.parent
@@ -96,6 +97,11 @@ def load_custom_css():
     </style>
     """, unsafe_allow_html=True)
 
+
+def generate_random_id():
+    """Generate a random 5-digit numerical ID as a string."""
+    return f"{random.randint(10000, 99999)}"
+
 def create_applicant_form():
     """Create the interactive applicant evaluation form."""
     st.markdown("""
@@ -141,7 +147,7 @@ def create_applicant_form():
         st.markdown('<div class="form-section">', unsafe_allow_html=True)
         st.markdown("#### 👤 Personal Information")
         
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4, col5, col6 = st.columns(6)
         if 'sample_applicant' in st.session_state:
             sample_applicant = st.session_state.sample_applicant
             first_name = sample_applicant.primary_driver.first_name
@@ -150,6 +156,12 @@ def create_applicant_form():
             license_status = sample_applicant.primary_driver.license_status.value
             years_licensed = sample_applicant.primary_driver.years_licensed
             email = sample_applicant.primary_driver.email
+            driver_id = sample_applicant.primary_driver.id
+            date_of_birth = sample_applicant.primary_driver.date_of_birth
+            license_number = sample_applicant.primary_driver.license_number
+            license_state = sample_applicant.primary_driver.license_state
+            license_issue_date = sample_applicant.primary_driver.license_issue_date
+            license_expiration_date = sample_applicant.primary_driver.license_expiration_date
         else:
             first_name = "John"
             last_name = "Doe"
@@ -157,6 +169,12 @@ def create_applicant_form():
             license_status = LicenseStatus.VALID.value
             years_licensed = 15
             email = "john.doe@email.com"
+            driver_id = "DRIVER_12345"
+            date_of_birth = date(1988, 1, 1)
+            license_number = "LIC_123456789"
+            license_state = "CA"
+            license_issue_date = date(2010, 1, 1)
+            license_expiration_date = date(2025, 1, 1)
 
         with col1:
 
@@ -172,6 +190,18 @@ def create_applicant_form():
         with col3:
             email = st.text_input("Email", value=email)
             years_licensed = st.number_input("Years Licensed", min_value=0, max_value=50, value=years_licensed)
+        
+        with col4:
+            driver_id = st.text_input("ID", value=driver_id)
+            date_of_birth = st.date_input("Date of Birth", value=date_of_birth)
+
+        with col5:
+            license_number = st.text_input("License Number", value=license_number)
+            license_state = st.text_input("License State", value=license_state)
+
+        with col6:
+            license_issue_date = st.date_input("License Issue Date", value=license_issue_date)
+            license_expiration_date = st.date_input("License Expiration Date", value=license_expiration_date)
         
         st.markdown('</div>', unsafe_allow_html=True)
         
@@ -216,9 +246,9 @@ def create_applicant_form():
         with col2:
             previous_coverage = st.checkbox("Had Previous Coverage", value=True)
             if previous_coverage:
-                coverage_lapse_days = st.number_input("Days Since Last Coverage", min_value=0, value=0)
+                prior_insurance_lapse_days = st.number_input("Days Since Last Coverage", min_value=0, value=0)
             else:
-                coverage_lapse_days = 365  # Assume 1 year lapse if no previous coverage
+                prior_insurance_lapse_days = 365  # Assume 1 year lapse if no previous coverage
         
         with col3:
             policy_term = st.selectbox("Policy Term", ["6 months", "12 months"], index=1)
@@ -230,7 +260,7 @@ def create_applicant_form():
         st.markdown('<div class="form-section">', unsafe_allow_html=True)
         st.markdown("#### 🚗 Vehicle Information")
         
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3, col4, col5 = st.columns(5)
         
         with col1:
             vehicle_year = st.number_input("Year", min_value=1990, max_value=2025, value=2020)
@@ -250,6 +280,9 @@ def create_applicant_form():
             vehicle_use = st.selectbox("Primary Use", ["Personal", "Business", "Commuting", "Pleasure"])
             garage_type = st.selectbox("Garage Type", ["Garage", "Carport", "Street", "Driveway"])
         
+        with col5:
+            vin = st.text_input("VIN", value="1HGBH41JXMN109186")
+
         st.markdown('</div>', unsafe_allow_html=True)
         
         # Driving History Section
@@ -327,7 +360,14 @@ def create_applicant_form():
                 age=age,
                 license_status=LicenseStatus(license_status),
                 years_licensed=years_licensed,
-                violations=violations
+                violations=violations,
+                driver_id=driver_id,
+                date_of_birth=date_of_birth,
+                license_number=license_number,
+                license_state=license_state,
+                license_issue_date=license_issue_date,
+                license_expiration_date=license_expiration_date,
+                claims=claims
             )
             
             vehicle = Vehicle(
@@ -335,20 +375,21 @@ def create_applicant_form():
                 make=vehicle_make,
                 model=vehicle_model,
                 category=VehicleCategory(vehicle_category),
+                vehicle_type=VehicleCategory(vehicle_category),
                 value=vehicle_value,
-                annual_mileage=annual_mileage
+                annual_mileage=annual_mileage,
+                vin = vin
             )
             
             applicant = Applicant(
-                application_id=f"APP_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+                applicant_id="APP_" + generate_random_id(),
                 primary_driver=driver,
-                vehicle=vehicle,
+                vehicles=[vehicle], 
                 credit_score=credit_score,
                 coverage_requested=coverage_requested,
-                coverage_lapse_days=coverage_lapse_days,
-                claims_history=claims
+                prior_insurance_lapse_days=prior_insurance_lapse_days,
+                territory="Urban"
             )
-            
             # Store in session state for evaluation
             st.session_state.current_applicant = applicant
             st.session_state.show_results = True
@@ -365,6 +406,7 @@ def show_evaluation_results():
     
     # Check for OpenAI API key
     import os
+    import random
     if not os.environ.get('OPENAI_API_KEY'):
         st.error("⚠️ OpenAI API key not configured. Please set OPENAI_API_KEY environment variable.")
         st.info("For testing purposes, showing mock evaluation results.")
@@ -433,15 +475,16 @@ def show_evaluation_results():
             st.write(f"**Applicant:** {applicant.primary_driver.first_name} {applicant.primary_driver.last_name}")
             st.write(f"**Age:** {applicant.primary_driver.age}")
             st.write(f"**Credit Score:** {applicant.credit_score}")
-            st.write(f"**Vehicle:** {applicant.vehicle.year} {applicant.vehicle.make} {applicant.vehicle.model}")
-            st.write(f"**Coverage Lapse:** {applicant.coverage_lapse_days} days")
+            for idx, Vehicle in enumerate(applicant.vehicles):
+                st.write(f"**Vehicle {idx+1}:** {Vehicle.year} {Vehicle.make} {Vehicle.model}")
+            st.write(f"**Coverage Lapse:** {applicant.prior_insurance_lapse_days} days")
             st.write(f"**Violations:** {len(applicant.primary_driver.violations)}")
-            st.write(f"**Claims:** {len(applicant.claims_history)}")
+            st.write(f"**Claims:** {len(applicant.primary_driver.claims)}")
         
         with col2:
             st.markdown("### 🤖 AI Analysis")
-            if result.reasoning:
-                st.write(result.reasoning)
+            if result.reason:
+                st.write(result.reason)
             else:
                 st.write("Detailed AI analysis completed based on underwriting criteria.")
             
@@ -457,9 +500,9 @@ def show_evaluation_results():
                 st.markdown('<span class="risk-indicator risk-high">🔴 Poor Credit</span>', unsafe_allow_html=True)
             
             # Coverage lapse risk
-            if applicant.coverage_lapse_days == 0:
+            if applicant.prior_insurance_lapse_days == 0:
                 st.markdown('<span class="risk-indicator risk-low">🟢 Continuous Coverage</span>', unsafe_allow_html=True)
-            elif applicant.coverage_lapse_days <= 30:
+            elif applicant.prior_insurance_lapse_days <= 30:
                 st.markdown('<span class="risk-indicator risk-medium">🟡 Short Lapse</span>', unsafe_allow_html=True)
             else:
                 st.markdown('<span class="risk-indicator risk-high">🔴 Extended Lapse</span>', unsafe_allow_html=True)
@@ -480,28 +523,28 @@ def show_evaluation_results():
         with col1:
             if st.button("📋 Copy to Clipboard", use_container_width=True):
                 result_text = f"""
-Underwriting Decision: {result.decision.value}
-Applicant: {applicant.primary_driver.first_name} {applicant.primary_driver.last_name}
-Credit Score: {applicant.credit_score}
-Decision: {result.decision.value}
-Reasoning: {result.reasoning or 'Standard underwriting evaluation'}
+                    Underwriting Decision: {result.decision.value}
+                    Applicant: {applicant.primary_driver.first_name} {applicant.primary_driver.last_name}
+                    Credit Score: {applicant.credit_score}
+                    Decision: {result.decision.value}
+                    Reason: {result.reason or 'Standard underwriting evaluation'}
                 """
                 st.code(result_text)
         
         with col2:
             result_json = {
-                "application_id": applicant.application_id,
+                "applicant_id": applicant.applicant_id,
                 "decision": result.decision.value,
                 "applicant_name": f"{applicant.primary_driver.first_name} {applicant.primary_driver.last_name}",
                 "credit_score": applicant.credit_score,
-                "reasoning": result.reasoning,
+                "reason": result.reason,
                 "timestamp": datetime.now().isoformat()
             }
             
             st.download_button(
                 "📥 Download JSON",
                 data=json.dumps(result_json, indent=2),
-                file_name=f"underwriting_result_{applicant.application_id}.json",
+                file_name=f"underwriting_result_{applicant.applicant_id}.json",
                 mime="application/json",
                 use_container_width=True
             )

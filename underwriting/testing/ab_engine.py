@@ -3,6 +3,7 @@ from datetime import datetime
 from dataclasses import dataclass
 import json
 import time
+import os
 from enum import Enum
 
 from underwriting.core.engine import UnderwritingEngine
@@ -69,12 +70,14 @@ class ABTestEngine:
     
     def __init__(self):
         """Initialize the A/B testing engine."""
+        print("Initializing A/B Test Engine...")
         self.test_configurations: Dict[str, TestConfiguration] = {}
         self.test_results: List[TestResult] = []
         self.engines: Dict[str, UnderwritingEngine] = {}
     
     def register_test_configuration(self, config: TestConfiguration):
         """Register a test configuration."""
+        print("Registering test configuration:")
         self.test_configurations[config.variant_id] = config
         
         # Create underwriting engine for this configuration
@@ -91,10 +94,52 @@ class ABTestEngine:
         """Run a single applicant through two variants and return results."""
         
         results = []
+        self.__init__()
+        self.register_test_configuration(TestConfiguration(
+            variant_id="underwriting_rules_standard",
+            name="Standard Underwriting Rules",
+            description="Default underwriting rules for standard evaluation.",
+            rules_file="underwriting_rules_standard.json"
+        ))
+        self.register_test_configuration(TestConfiguration(
+            variant_id="underwriting_rules_conservative",
+            name="Conservative Underwriting Rules",
+            description="More conservative underwriting rules for risk-averse evaluation.",
+            rules_file="underwriting_rules_conservative.json"
+        ))
+        self.register_test_configuration(TestConfiguration(
+            variant_id="underwriting_rules_liberal",
+            name="Liberal Underwriting Rules",
+            description="Liberal automobile insurance underwriting rules for risk-tolerant evaluation.",
+            rules_file="underwriting_rules_liberal.json"
+        ))
+
+
+        if variant_a == "standard":
+            variant_a = "underwriting_rules_standard"
+        elif variant_b == "standard":
+            variant_b = "underwriting_rules_standard"
+
+        if variant_a == "conservative":
+            variant_a = "underwriting_rules_conservative"
+        elif variant_b == "conservative":
+            variant_b = "underwriting_rules_conservative"
+
+        if variant_a == "liberal":
+            variant_a = "underwriting_rules_liberal"
+        elif variant_b == "liberal":
+            variant_b = "underwriting_rules_liberal"
+
+        # Ensure variants are in the correct format
+        #variant_a = ".\\config\\rules\\" + variant_a + ".json"
+        #variant_b = ".\\config\\rules\\" + variant_b + ".json"  
+        #print(f"Variant A is: {variant_a}")
+        #print(f"Variant B is: {variant_b}")
         
         for variant_id in [variant_a, variant_b]:
+            print(f"\nRunning evaluation for variant: {variant_id}")
             if variant_id not in self.engines:
-                raise ValueError(f"Variant {variant_id} not registered")
+                raise ValueError(f"Variant {variant_id} is not registered in the test configurations.")
             
             engine = self.engines[variant_id]
             start_time = time.time()

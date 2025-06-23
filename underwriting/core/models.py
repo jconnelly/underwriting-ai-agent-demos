@@ -64,7 +64,7 @@ class Vehicle(BaseModel):
     make: str
     model: str
     category: VehicleCategory
-    value: float
+    vehicle_type: VehicleCategory
 
 class Driver(BaseModel):
     driver_id: str
@@ -80,6 +80,13 @@ class Driver(BaseModel):
     claims: List[Claim] = Field(default_factory=list)
     
     @property
+    def years_licensed_calc(self) -> int:
+        today = date.today()
+        return today.year - self.license_issue_date.year - ((today.month, today.day) < (self.license_issue_date.month, self.license_issue_date.day))
+    
+    years_licensed: int = years_licensed_calc
+
+    @property
     def age(self) -> int:
         today = date.today()
         return today.year - self.date_of_birth.year - ((today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day))
@@ -92,6 +99,8 @@ class Applicant(BaseModel):
     credit_score: Optional[int] = None
     prior_insurance_lapse_days: int = 0
     fraud_history: bool = False
+    territory: str
+    coverage_requested: List[str] = Field(default_factory=list)
     
     @property
     def all_drivers(self) -> List[Driver]:

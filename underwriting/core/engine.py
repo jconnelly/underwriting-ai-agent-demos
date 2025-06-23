@@ -14,12 +14,14 @@ from .models import Applicant, Driver, Vehicle, Violation, Claim, UnderwritingRe
 class UnderwritingEngine:
     """Enhanced underwriting engine with A/B testing support."""
     
-    def __init__(self, rules_file: str = "underwriting_rules.json", prompt_template: Optional[PromptTemplate] = None):
+    def __init__(self, rules_file: str = "underwriting_rules_standard.json", prompt_template: Optional[PromptTemplate] = None):
         """Initialize the underwriting engine with configurable rules and prompts."""
         
-        self.rules_file = rules_file
+        # Load underwriting rules from specified JSON file
+        self.rules_file = ".\\config\\rules\\" + rules_file
         self.rules = self._load_rules()
-        
+        print(f"Loaded underwriting rules from {self.rules_file}")
+
         # Initialize OpenAI client (lazy initialization to avoid API key issues during config listing)
         self.llm = None
         
@@ -103,9 +105,9 @@ PRIMARY DRIVER:
         
         # Claims
         claims_info = ""
-        if driver.claims_history:
+        if driver.claims:
             claims_info = "\nCLAIMS HISTORY:"
-            for claim in driver.claims_history:
+            for claim in driver.claims:
                 years_ago = (datetime.now().date() - claim.date).days // 365
                 claims_info += f"\n- {claim.claim_type}: ${claim.amount:,} ({years_ago} years ago)"
         else:
@@ -119,9 +121,9 @@ PRIMARY DRIVER:
         # Other info
         other_info = f"""
 CREDIT SCORE: {applicant.credit_score}
-COVERAGE LAPSE: {applicant.coverage_lapse_days} days
+COVERAGE LAPSE: {applicant.prior_insurance_lapse_days} days
 TERRITORY: {applicant.territory}
-REQUESTED COVERAGE: {applicant.requested_coverage}"""
+REQUESTED COVERAGE: {applicant.coverage_requested}"""
         
         return driver_info + violations_info + claims_info + vehicles_info + other_info
     
