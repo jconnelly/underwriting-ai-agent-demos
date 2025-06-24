@@ -108,6 +108,7 @@ def create_applicant_form():
     <div class="evaluation-header">
         <h1>📋 Applicant Evaluation</h1>
         <p>AI-Powered Insurance Underwriting Assessment</p>
+        <p>(WIP) Portfolio Project managed by <a href="https://jeremiahconnelly.dev" target="_blank">Jeremiah Connelly</a></p>   
     </div>
     """, unsafe_allow_html=True)
     

@@ -31,6 +31,7 @@ def configure_page():
             # Automobile Insurance Underwriting System
             
             An AI-powered underwriting system with comprehensive A/B testing capabilities.
+            <p>Work-in-Progress Portfolio Project managed by <a href="https://jeremiahconnelly.dev" target="_blank">Jeremiah Connelly</a></p>   
             
             **Features:**
             - AI-powered decision making with OpenAI GPT-4
@@ -281,9 +282,9 @@ def show_main_dashboard():
     <div class="main-header">
         <h1>🚗 Automobile Insurance Underwriting</h1>
         <p>AI-Powered Underwriting with A/B Testing, Configurable Decisioning Rules and Applicants</p>
+        <p>(WIP) Portfolio Project managed by <a href="https://jeremiahconnelly.dev" target="_blank">Jeremiah Connelly</a></p>                     
     </div>
     """, unsafe_allow_html=True)
-     # <p>This is a Portfolio Project created and managed by <href="https://jeremiahconnelly.dev">Jeremiah Connelly</href></p>
     
     # Key features overview
     st.markdown("## 🎯 Key Features")
@@ -294,7 +295,7 @@ def show_main_dashboard():
         st.markdown("""
         <div class="metric-card">
             <h3>🤖 Agentic AI System</h3>
-            <p>OpenAI GPT-4 integration for intelligent risk assessment and decisioning </p>
+            <p>OpenAI GPT-4 integration for intelligent risk assessment and decisioning </p> 
         </div>
         """, unsafe_allow_html=True)
     
@@ -318,7 +319,7 @@ def show_main_dashboard():
         st.markdown("""
         <div class="metric-card">
             <h3>⚙️ Configurable</h3>
-            <p>Flexible rule engine designs with conservative, baseline, and liberal policies</p>
+            <p>Flexible rule engine designs with conservative, baseline, and liberal policies</p> 
         </div>
         """, unsafe_allow_html=True)
     

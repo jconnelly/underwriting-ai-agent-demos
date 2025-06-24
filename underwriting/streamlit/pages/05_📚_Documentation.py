@@ -84,6 +84,7 @@ def show_getting_started():
     <div class="docs-header">
         <h1>📚 Documentation & Help</h1>
         <p>Complete Guide to the Automobile Insurance Underwriting System</p>
+        <p>(WIP) Portfolio Project managed by <a href="https://jeremiahconnelly.dev" target="_blank">Jeremiah Connelly</a></p>   
     </div>
     """, unsafe_allow_html=True)
     

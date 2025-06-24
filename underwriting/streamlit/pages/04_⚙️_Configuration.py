@@ -82,6 +82,7 @@ def show_system_status():
     <div class="config-header">
         <h1>⚙️ System Configuration</h1>
         <p>Manage Settings, API Keys, and System Health</p>
+        <p>(WIP) Portfolio Project managed by <a href="https://jeremiahconnelly.dev" target="_blank">Jeremiah Connelly</a></p>   
     </div>
     """, unsafe_allow_html=True)
     

@@ -111,6 +111,7 @@ def show_ab_testing_interface():
     <div class="ab-header">
         <h1>🧪 A/B Testing Dashboard</h1>
         <p>Statistical Comparison of Underwriting Strategies</p>
+        <p>(WIP) Portfolio Project managed by <a href="https://jeremiahconnelly.dev" target="_blank">Jeremiah Connelly</a></p>   
     </div>
     """, unsafe_allow_html=True)
     
