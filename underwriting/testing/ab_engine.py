@@ -114,28 +114,14 @@ class ABTestEngine:
             rules_file="underwriting_rules_liberal.json"
         ))
 
+        variant_map = {
+            "standard": "underwriting_rules_standard",
+            "conservative": "underwriting_rules_conservative",
+            "liberal": "underwriting_rules_liberal"
+        }
+        variant_a = variant_map.get(variant_a, variant_a)
+        variant_b = variant_map.get(variant_b, variant_b)
 
-        if variant_a == "standard":
-            variant_a = "underwriting_rules_standard"
-        elif variant_b == "standard":
-            variant_b = "underwriting_rules_standard"
-
-        if variant_a == "conservative":
-            variant_a = "underwriting_rules_conservative"
-        elif variant_b == "conservative":
-            variant_b = "underwriting_rules_conservative"
-
-        if variant_a == "liberal":
-            variant_a = "underwriting_rules_liberal"
-        elif variant_b == "liberal":
-            variant_b = "underwriting_rules_liberal"
-
-        # Ensure variants are in the correct format
-        #variant_a = ".\\config\\rules\\" + variant_a + ".json"
-        #variant_b = ".\\config\\rules\\" + variant_b + ".json"  
-        #print(f"Variant A is: {variant_a}")
-        #print(f"Variant B is: {variant_b}")
-        
         for variant_id in [variant_a, variant_b]:
             print(f"\nRunning evaluation for variant: {variant_id}")
             if variant_id not in self.engines:

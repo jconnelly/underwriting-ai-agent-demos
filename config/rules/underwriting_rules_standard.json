@@ -3,7 +3,6 @@
     "version": "1.0",
     "last_updated": "2025-12-06",
     "description": "Structured automobile insurance underwriting rules for basic eligibility assessment",
-    
     "hard_stops": {
       "description": "Automatic declination criteria - immediate denial",
       "rules": [
@@ -12,13 +11,18 @@
           "name": "Invalid Driver License",
           "description": "Driver license must be valid, unexpired, and not suspended/revoked",
           "criteria": {
-            "license_status": ["suspended", "revoked", "expired", "invalid"],
+            "license_status": [
+              "suspended",
+              "revoked",
+              "expired",
+              "invalid"
+            ],
             "action": "deny",
             "reason": "Invalid or suspended driver license"
           }
         },
         {
-          "rule_id": "HS002", 
+          "rule_id": "HS002",
           "name": "Major Violations - DUI",
           "description": "Multiple DUI convictions within lookback period",
           "criteria": {
@@ -31,13 +35,13 @@
         },
         {
           "rule_id": "HS003",
-          "name": "Major Violations - Reckless Driving", 
+          "name": "Major Violations - Reckless Driving",
           "description": "Multiple reckless driving convictions",
           "criteria": {
             "violation_type": "reckless_driving",
             "count_threshold": 2,
             "lookback_years": 3,
-            "action": "deny", 
+            "action": "deny",
             "reason": "Multiple reckless driving convictions"
           }
         },
@@ -73,9 +77,12 @@
             "reason": "Extended coverage lapse exceeding 90 days"
           }
         }
-      ]
+      ],
+      "dui_violations_limit": 2,
+      "coverage_lapse_days": 180,
+      "invalid_license": true,
+      "minimum_credit_score": 500
     },
-
     "adjudication_triggers": {
       "description": "Conditions requiring manual underwriter review",
       "rules": [
@@ -91,12 +98,16 @@
           }
         },
         {
-          "rule_id": "ADJ002", 
+          "rule_id": "ADJ002",
           "name": "Single Major Violation",
           "description": "One major violation within recent period",
           "criteria": {
             "major_violation_count": 1,
-            "violation_types": ["DUI", "reckless_driving", "hit_and_run"],
+            "violation_types": [
+              "DUI",
+              "reckless_driving",
+              "hit_and_run"
+            ],
             "lookback_years": 3,
             "action": "adjudicate",
             "reason": "Recent major violation requiring review"
@@ -104,7 +115,7 @@
         },
         {
           "rule_id": "ADJ003",
-          "name": "Moderate Claims History", 
+          "name": "Moderate Claims History",
           "description": "Moderate claims requiring review",
           "criteria": {
             "at_fault_claims_count": 2,
@@ -121,7 +132,7 @@
             "driver_age_max": 21,
             "any_violations": true,
             "lookback_years": 3,
-            "action": "adjudicate", 
+            "action": "adjudicate",
             "reason": "Young driver with violations requiring review"
           }
         },
@@ -130,7 +141,11 @@
           "name": "High-Performance Vehicle",
           "description": "High-performance or luxury vehicles",
           "criteria": {
-            "vehicle_category": ["sports_car", "luxury", "high_performance"],
+            "vehicle_category": [
+              "sports_car",
+              "luxury",
+              "high_performance"
+            ],
             "action": "adjudicate",
             "reason": "High-performance vehicle requiring review"
           }
@@ -156,9 +171,12 @@
             "reason": "Coverage lapse requiring review"
           }
         }
-      ]
+      ],
+      "young_driver_age": 30,
+      "violation_count_threshold": 3,
+      "claims_count_threshold": 2,
+      "high_value_vehicle": 75000
     },
-
     "acceptance_criteria": {
       "description": "Conditions for automatic acceptance",
       "rules": [
@@ -179,7 +197,7 @@
           }
         },
         {
-          "rule_id": "ACC002", 
+          "rule_id": "ACC002",
           "name": "Good Driver Minor Issues",
           "description": "Good drivers with minimal issues",
           "criteria": {
@@ -193,9 +211,12 @@
             "reason": "Good driver with minimal issues"
           }
         }
-      ]
+      ],
+      "preferred_credit_score": 720,
+      "minimum_years_licensed": 3,
+      "clean_record_years": 5,
+      "continuous_coverage_bonus": true
     },
-
     "evaluation_parameters": {
       "lookback_periods": {
         "violations": 5,
@@ -203,22 +224,59 @@
         "license_issues": 3
       },
       "age_categories": {
-        "young_driver": {"min": 16, "max": 24},
-        "mature_driver": {"min": 25, "max": 65}, 
-        "senior_driver": {"min": 66, "max": 99}
+        "young_driver": {
+          "min": 16,
+          "max": 24
+        },
+        "mature_driver": {
+          "min": 25,
+          "max": 65
+        },
+        "senior_driver": {
+          "min": 66,
+          "max": 99
+        }
       },
       "violation_severity": {
-        "major": ["DUI", "reckless_driving", "hit_and_run", "vehicular_homicide"],
-        "moderate": ["speeding_15_over", "improper_passing", "following_too_close"],
-        "minor": ["speeding_10_under", "improper_turn", "parking_violation"]
+        "major": [
+          "DUI",
+          "reckless_driving",
+          "hit_and_run",
+          "vehicular_homicide"
+        ],
+        "moderate": [
+          "speeding_15_over",
+          "improper_passing",
+          "following_too_close"
+        ],
+        "minor": [
+          "speeding_10_under",
+          "improper_turn",
+          "parking_violation"
+        ]
       },
       "vehicle_categories": {
-        "standard": ["sedan", "suv", "minivan", "pickup"],
-        "sports_car": ["sports_car", "convertible", "performance"],
-        "luxury": ["luxury_sedan", "luxury_suv"],
-        "high_performance": ["supercar", "racing", "modified"]
+        "standard": [
+          "sedan",
+          "suv",
+          "minivan",
+          "pickup"
+        ],
+        "sports_car": [
+          "sports_car",
+          "convertible",
+          "performance"
+        ],
+        "luxury": [
+          "luxury_sedan",
+          "luxury_suv"
+        ],
+        "high_performance": [
+          "supercar",
+          "racing",
+          "modified"
+        ]
       }
     }
   }
 }
-

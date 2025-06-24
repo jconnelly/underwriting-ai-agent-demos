@@ -113,8 +113,8 @@ def show_system_status():
     # Sample Data Status
     with col3:
         try:
-            from underwriting.data.sample_generator import get_sample_applicants
-            samples = get_sample_applicants()
+            from underwriting.data.sample_generator import create_sample_applicants
+            samples = create_sample_applicants()
             if len(samples) >= 6:
                 st.success("👥 Sample Data")
                 st.markdown('<span class="status-indicator status-connected">6 Applicants</span>', unsafe_allow_html=True)

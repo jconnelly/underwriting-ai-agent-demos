@@ -20,7 +20,7 @@ class UnderwritingEngine:
         # Load underwriting rules from specified JSON file
         self.rules_file = ".\\config\\rules\\" + rules_file
         self.rules = self._load_rules()
-        print(f"Loaded underwriting rules from {self.rules_file}")
+        #print(f"Loaded underwriting rules from {self.rules_file}")
 
         # Initialize OpenAI client (lazy initialization to avoid API key issues during config listing)
         self.llm = None
