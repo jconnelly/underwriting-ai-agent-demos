@@ -8,9 +8,9 @@ comparing different underwriting rules and strategies.
 import streamlit as st
 import sys
 from pathlib import Path
-import plotly.graph_objects as go
-import plotly.express as px
-import pandas as pd
+#import plotly.graph_objects as go
+#import plotly.express as px
+#import pandas as pd
 from datetime import datetime
 import json
 
