@@ -11,19 +11,10 @@ A comprehensive automobile insurance underwriting system featuring:
 
 ## ISSUES NEEDING RESOLUTION/FIXING
 
-### Look and Feel
-Every main section title image/bar should have the following after the description:
-   For example, on the Configuration page it should be:
-   "System Configuration"
-   "Manage Settings, API Keys, System Health"
-   "<p>This is a Portfolio Project created and managed by <href="https://jeremiahconnelly.dev">Jeremiah Connelly</href></p>"
-   or like on the Evaluate page
-   "Applicant Evaluation"
-   "AI-Powered Insurance Underwriting Assessment"
-   "<p>This is a Portfolio Project created and managed by <href="https://jeremiahconnelly.dev">Jeremiah Connelly</href></p>"
-
 ### Functionality
-1. Evaluate.py
+1. HIGH PRIORITY - Need to be able to load and launch this on Streamlit Community App deployment.   Current deployment throws errors while trying to install the dependecies.  Not sure if the error is coming from the pyproject.toml or the requirement.txt file
+
+2. Evaluate.py
    Line 146:  If the user selects from line 128, then it should populate all the fields in Evaluate.py with the user selected data
 
 

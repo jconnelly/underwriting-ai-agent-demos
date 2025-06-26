@@ -8,9 +8,9 @@ comparing different underwriting rules and strategies.
 import streamlit as st
 import sys
 from pathlib import Path
-#import plotly.graph_objects as go
-#import plotly.express as px
-#import pandas as pd
+import plotly.graph_objects as go
+import plotly.express as px
+import pandas as pd
 from datetime import datetime
 import json
 
@@ -251,8 +251,8 @@ def run_ab_test_analysis():
             # Get sample applicants
             sample_applicants = create_sample_applicants()
             
-            print(f"Variant A: {config['variant_a']}")
-            print(f"Variant B: {config['variant_b']}")
+            #print(f"Variant A: {config['variant_a']}")
+            #print(f"Variant B: {config['variant_b']}")
 
             # Run comparison
             if config['test_type'] == "Rule Comparison":
